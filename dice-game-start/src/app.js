@@ -1,32 +1,15 @@
-//console.log("hello world");
-
-//változó deklarálás
+//változók
 let scores, roundScore, activePlayer;
 
+//minden játék elején ezt a fgv-t kell meghívni
 function newGame() {
-  //értékadás (value assignment)
-  //a játékosok pontszámai , mindkét játékos nulla ponttal indul
-
   scores = [0, 0];
-
-  //a forduló alatt megszerzett pontok
 
   roundScore = 0;
 
-  //az első játékos kezd
-
   activePlayer = 0;
 
-  // dom manipuláció (dom: document object model = HTML kód)
-
-  //kiválasztjuk a score-0 id-val rendelkező html elemet és a tartalmát beállítjuk 0ra
   document.querySelector('#score-0').textContent = 0;
-  // document.getElementById('score-0').textContent =0;
-  //ugyanaz mint a másik csak itt rögtön id-t kell megadni, ezért nem kell #
-  //de a querySelector mindenre jó
-
-  //cammelCase:JavaScript, PascalCase:JavaScript, snake-case:Python,php, kebab-case:CSS
-
   document.querySelector('#score-1').textContent = 0;
   document.querySelector('#current-0').textContent = 0;
   document.querySelector('#current-1').textContent = 0;
@@ -39,9 +22,12 @@ function newGame() {
   document.querySelector('#name-0').textContent = 'Player 1';
   document.querySelector('#name-1').textContent = 'Player 2';
 
+  //második indítás után
+  //nyertes felirat leszedése
   document.querySelector('.player-0-panel').classList.remove('winner');
   document.querySelector('.player-1-panel').classList.remove('winner');
 
+  //egyes játékos kezdi mindig a játékot
   document.querySelector('.player-0-panel').classList.add('active');
   document.querySelector('.player-1-panel').classList.remove('active');
 }
@@ -55,18 +41,11 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
 
   //2. jelenítsük meg a dobást
   document.querySelector('.dice').style.display = 'block';
-  //template string
   document.querySelector('.dice').setAttribute('src', `dice-${dice}.png`);
-  //string concatenation - strin összefűzés - ugyanaz csak csúnyább
-  //document.querySelector('.dice').setAttribute('src', 'dice-' + dice + '.png');
-  //szekvencia szerint az alapértelmezett 5ös dobásnak elöször meg kellene jelenni
-  //de nem fog mert a JS okos ->videó
-  //meg lehetne a két sor sorrendjét cserélni, hogy "helyes" sorrendben fussanak, de így is helyes a kód
 
   //3.meg kell vizsgálni a dobást
   //ha a dobott érték 1, akkor a pontok elvesznek és a másik játékos következik
   //ha nem 1 a dobott érték, akkor hozzáadjuk a dobás értékét a pontokhoz, és ugyanaz a játékos dobhat
-  //vezérlési szerkezet: elágazás
   if (dice !== 1) {
     roundScore = roundScore + dice;
     //a UI-on megjelenítjük az eredményt
@@ -75,8 +54,6 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
     nextPlayer();
   }
 });
-
-//DRY = do not repeat yourself
 
 function nextPlayer() {
   roundScore = 0;
@@ -88,6 +65,7 @@ function nextPlayer() {
   //UI-on is frissitsük az értékeket
   document.querySelector('#current-0').textContent = 0;
   document.querySelector('#current-1').textContent = 0;
+  //toogle-kapcsoló: ha aktiv volt inaktiv lesz, ha inaktív volt aktív lesz
   document.querySelector('.player-0-panel').classList.toggle('active');
   document.querySelector('.player-1-panel').classList.toggle('active');
 }
